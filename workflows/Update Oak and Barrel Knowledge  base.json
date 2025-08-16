@@ -1,0 +1,129 @@
+{
+  "name": "Update Oak and Barrel Knowledge  base",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload Documents",
+        "formDescription": "upload documents to the knowledge base",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "File",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        0
+      ],
+      "id": "d04ee261-4561-4ded-80b6-5d9f36ed9e0d",
+      "name": "On form submission",
+      "webhookId": "08453bea-8e78-491c-b5b3-e57c39df35f0"
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        176
+      ],
+      "id": "f739a7bc-9179-4850-b012-3d04f01d0645",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        192
+      ],
+      "id": "31738d5d-9be3-4525-a1e3-542cc9713285",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5srS6Jd32VkQUKyt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        16
+      ],
+      "id": "a2461bd0-4928-428a-aa2d-fb5327f2ea87",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "kD6yMzcOzM9QvdeV",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2b5d046e-1cf8-4de1-8b67-60ee7e685d5e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4a6e244da7ea40c2c7ded40d02bf025a61a833c5ee3271fe5a06a9f6cdfe37ad"
+  },
+  "id": "eXXPD9ueQdgDn10e",
+  "tags": []
+}

@@ -1,0 +1,15 @@
+{
+  "name": "n8n-deploy",
+  "version": "1.0.0",
+  "description": "Minimal n8n deployment with Postgres",
+  "scripts": {
+    "start": "n8n"
+  },
+  "dependencies": {
+    "n8n": "^2.0.0",
+    "pg": "^8.12.0"
+  },
+  "engines": {
+    "node": ">=20.19 <=24.x"
+  }
+}
